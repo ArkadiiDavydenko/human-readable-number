@@ -1,6 +1,4 @@
-// module.exports = function toReadable (number) {
-function toReadable(number) {
-    let resultString = '';
+module.exports = function toReadable (number) {
     const dictionary = {
         0: 'zero',
         1: 'one',
@@ -33,38 +31,37 @@ function toReadable(number) {
         100: 'hundred',
     }
 
-    const array = number.toString().split('');
-    console.log(array)
-    if (array[2]) {
-        resultString += dictionary[+array[0]] + ' ' + dictionary[100];
-        console.log(resultString)
-    }
-    if (array[1]) {
-        let num = (+array[1]) * 10;
-        if (num > 19) {
+    const array = number.toString().split('').reverse()
+    let result = '';
 
-            if (array[2])  resultString += ' '
-            resultString += dictionary[num]
-            console.log(resultString)
+    if (array[2]) {
+        result += dictionary[Number(array[2])] + ' ' + dictionary[100]
+    }
+
+    if (array[1]) {
+        const n = Number(array[1]) * 10;
+        if (n > 19) {
+            if (array[2]) result += ' '
+            result += dictionary[n]
             if (array[0]) {
                 if (array[0] != 0) {
-                    if (array[1]) resultString += ' '
-                    resultString += dictionary[+array[2]]
+                    if (array[1]) result += ' '
+                    result += dictionary[Number(array[0])]
                 }
             }
-        } else if (num > 0) {
-            if (array[2]) resultString += ' '
-            resultString += dictionary[num + (+array[0])]
+        } else if (n > 0) {
+            if (array[2]) result += ' '
+            result += dictionary[n + Number(array[0])]
         } else if (array[0] && array[0] > 0) {
-            if (array[1]) resultString += ' '
-            resultString += dictionary[+array[0]]
+            if (array[1]) result += ' '
+            result += dictionary[Number(array[0])]
         }
     } else if (array[0]) {
-        if (array[1]) resultString += ' '
-        resultString += dictionary[+array[0]]
+        if (array[1]) result += ' '
+        result += dictionary[Number(array[0])]
     }
 
-    return resultString
+    return result
 }
 
 console.log(toReadable(997))
